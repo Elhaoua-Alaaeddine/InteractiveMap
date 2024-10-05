@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive University Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #map {
+            height: 100vh; /* Full height map */
+            width: 100%; /* Full width map */
+        }
+
+        /* Lightbox styles */
+        .lightbox {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Black background with transparency */
+            justify-content: center;
+            align-items: center;
+            opacity: 0; /* Fully transparent */
+            transition: opacity 0.3s ease; /* Smooth transition for opacity */
+            z-index: 1000; /* Above other elements */
+        }
+
+        .lightbox.show {
+            display: flex; /* Show the lightbox */
+            opacity: 1; /* Fully opaque */
+        }
+
+        .lightbox-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            width: 80%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .close {
+            cursor: pointer;
+            color: red;
+            font-weight: bold;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="close" id="closeLightbox">&times;</span>
+            <div id="lightboxInfo"></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([20, 0], 2); // Change initial coordinates and zoom level to fit all universities
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://carto.com/">CartoDB</a> contributors',
+            maxZoom: 6,
+            minZoom: 2
+        }).addTo(map);
+
+        // Create a marker cluster group
+        var markers = L.markerClusterGroup();
+
+        // Define your universities array
+        var universities = [
+            {name: 'University of Bologna', coords: [44.4949, 11.3426], founded: '1088', info: 'Oldest university in the world.'},
+            {name: 'University of Paris', coords: [48.8566, 2.3522], founded: '1150', info: 'Founded in 1150 in Paris.'},
+            {name: 'University of Oxford', coords: [51.7548, -1.2544], founded: '1167', info: 'One of the oldest universities.'},
+            {name: 'University of Cambridge', coords: [52.2043, 0.1218], founded: '1209', info: 'Founded in Cambridge, UK.'},
+            {name: 'Al-Qarawiyyin', coords: [34.0605, -4.9784], founded: '859', info: 'Located in Fez, Morocco.'},
+            {name: 'University of Salamanca', coords: [40.9634, -5.6669], founded: '1134', info: 'Located in Spain.'},
+            {name: 'Al-Azhar', coords: [30.0444, 31.2357], founded: '970', info: 'Located in Cairo, Egypt.'},
+            {name: 'Vicenza', coords: [45.5455, 11.5354], founded: '1200', info: 'Located in Italy.'},
+            {name: 'Padua', coords: [45.4064, 11.8768], founded: '1222', info: 'Located in Italy.'},
+            {name: 'University of Naples', coords: [40.8518, 14.2681], founded: '1224', info: 'Located in Naples, Italy.'},
+            {name: 'University of Heidelberg', coords: [49.3988, 8.6724], founded: '1386', info: 'Located in Heidelberg, Germany.'},
+            {name: 'University of Vienna', coords: [48.2082, 16.3738], founded: '1365', info: 'Located in Austria.'},
+            {name: 'Zaytuna', coords: [36.8065, 10.1815], founded: '737', info: 'Located in Tunisia.'},
+            {name: 'University of Sankoré', coords: [16.7745, -3.0075], founded: '989', info: 'Located in Timbuktu, Mali.'},
+            {name: 'Nalanda University', coords: [25.1358, 85.4433], founded: '5th century', info: 'Located in India.'},
+            {name: 'Taxila', coords: [33.7458, 72.7878], founded: '4th century BC', info: 'Ancient university in Pakistan.'},
+            {name: 'Sungkyunkwan University', coords: [37.5874, 126.9927], founded: '1398', info: 'Located in Seoul, South Korea.'},
+            {name: 'Nanjing University', coords: [32.0603, 118.7969], founded: '258', info: 'Located in Nanjing, China.'},
+            {name: 'University of Toulouse', coords: [43.6047, 1.4442], founded: '1229', info: 'Located in Toulouse, France.'},
+            {name: 'University of Erfurt', coords: [50.9787, 11.0328], founded: '1379', info: 'Located in Erfurt, Germany.'},
+            {name: 'University of Ferrara', coords: [44.8372, 11.6206], founded: '1391', info: 'Located in Ferrara, Italy.'},
+            {name: 'University of Würzburg', coords: [49.7944, 9.9294], founded: '1402', info: 'Located in Würzburg, Germany.'},
+            {name: 'University of Leipzig', coords: [51.3397, 12.3731], founded: '1409', info: 'Located in Leipzig, Germany.'},
+            {name: 'University of St. Andrews', coords: [56.3404, -2.7955], founded: '1413', info: 'Located in St. Andrews, Scotland.'},
+            {name: 'University of Turin', coords: [45.0703, 7.6869], founded: '1404', info: 'Located in Turin, Italy.'},
+            {name: 'University of Louvain', coords: [50.8798, 4.7005], founded: '1425', info: 'Located in Louvain, Belgium.'},
+            {name: 'University of Poitiers', coords: [46.5802, 0.3404], founded: '1431', info: 'Located in Poitiers, France.'},
+            {name: 'Jenne (Djenné) Madrasas', coords: [13.9067, -4.5540], founded: '12th century', info: 'Located in Djenné, Mali.'},
+            {name: 'Sidi Okba', coords: [34.6790, 5.8889], founded: '686', info: 'Located in Biskra, Algeria.'},
+            {name: 'Kairouan Mosque', coords: [35.6781, 10.0963], founded: '670', info: 'Located in Kairouan, Tunisia.'},
+            {name: 'Madrasa Attarine', coords: [34.0648, -4.9784], founded: '1323', info: 'Located in Fez, Morocco.'},
+            {name: 'Madrasa Bou Inania', coords: [34.0656, -4.9755], founded: '1351', info: 'Located in Fez, Morocco.'}
+        ];
+
+        // Function to create markers and add them to the map
+        universities.forEach(university => {
+            var marker = L.marker(university.coords).addTo(markers)
+                .bindPopup(`<b>${university.name}</b>`, { closeButton: false })
+                .on('click', function() {
+                    openLightbox(university);
+                });
+        });
+
+        map.addLayer(markers);
+
+        // Function to open the lightbox
+        function openLightbox(university) {
+            var lightbox = document.getElementById('lightbox');
+            var lightboxInfo = document.getElementById('lightboxInfo');
+            lightboxInfo.innerHTML = `<h2>${university.name}</h2><p>Founded: ${university.founded}</p><p>${university.info}</p>`;
+            lightbox.classList.add('show'); // Add show class to make it visible
+
+            // Delay adding the opacity to ensure the display change is done before opacity change
+            setTimeout(() => {
+                lightbox.style.opacity = '1'; // Set to opaque
+            }, 10);
+        }
+
+        // Function to close the lightbox
+        document.getElementById('closeLightbox').onclick = function() {
+            var lightbox = document.getElementById('lightbox');
+            lightbox.style.opacity = '0'; // Set to transparent
+
+            // Wait for the transition to finish before hiding it
+            lightbox.addEventListener('transitionend', function() {
+                lightbox.classList.remove('show'); // Remove the show class to hide it
+                lightbox.style.opacity = '0'; // Reset opacity
+            }, { once: true });
+        };
+    </script>
+</body>
+</html>
