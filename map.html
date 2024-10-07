@@ -54,14 +54,17 @@
         opacity: 1; /* Fully opaque */
       }
 
-      .lightbox-content {
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        max-width: 400px;
-        width: 80%;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      }
+.lightbox-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 80%;
+  max-height: 80vh; /* Maximum height of lightbox */
+  overflow-y: auto; /* Enables vertical scroll if content exceeds max-height */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
 
       .close {
         cursor: pointer;
@@ -149,6 +152,7 @@
             <li><strong>Leo Africanus (al-Hasan al-Wazzan)</strong> (born 1494): A diplomat and scholar, Leo Africanus is best known for his work 'Description of Africa,' which provided a detailed account of North African geography and culture in the 16th century.</li>
         </ul>
     `,
+    image: "https://idsb.tmgrup.com.tr/ly/uploads/images/2020/06/07/39198.jpg"
         },
         {
           name: "University of Salamanca",
@@ -172,6 +176,7 @@
             <li><strong>Sheikh Ahmed el-Tayeb</strong> (born 1946): The current Grand Imam of Al Azhar, Sheikh Ahmed el-Tayeb is a prominent Islamic scholar and authority on Sunni Islam. He is known for his efforts in promoting interfaith dialogue and modernizing the religious curriculum at Al Azhar.</li>
         </ul>
     `,
+    image: "https://www.inss.org.il/wp-content/uploads/2023/11/shutterstock_2269866857.jpg"
         },
         {
           name: "Vicenza",
@@ -217,6 +222,7 @@
             <li><strong>Abu Zayd al-Balkhi</strong> (born 850): Abu Zayd al-Balkhi was a Persian scholar and geographer, recognized for his contributions to geography and psychology. His works greatly influenced the fields of cartography and social sciences.</li>
         </ul>
     `,
+    image: "https://upload.wikimedia.org/wikipedia/commons/d/d7/Tunis_Facult%C3%A9_Zaitouna.JPG"
         },
         {
           name: "University of Sankoré",
@@ -322,6 +328,7 @@
             <li><strong>Al-Wansharisi</strong> (born 1430): A Maliki jurist and scholar from North Africa, Al-Wansharisi is known for his works on Islamic law and his influence on the Maliki school of thought, which is widely followed in the region. He contributed to the intellectual and religious development of North African Islamic communities.</li>
         </ul>
     `,
+    image: "https://mosqpedia.org/img/cache/largeimage/xBlfMuP3hpMNXcKoRXlAgZmpNpxh9ql96hTv4HUf"
         },
 
         {
@@ -339,6 +346,7 @@
             <li><strong>Ibn Abi Zayd al-Qayrawani</strong> (born 922): A leading Maliki scholar and theologian, Ibn Abi Zayd is remembered for his treatises on Islamic jurisprudence and his influence on the religious and educational life of Kairouan and the wider Islamic world.</li>
         </ul>
     `,
+    image: "https://sacredsites.com/images/africa/tunisia/great-mosque-kairouan-1200.jpg"
         },
         {
           name: "Madrasa Al-Attarine",
@@ -354,6 +362,7 @@
             <li><strong>Ibn Khaldun</strong> (born 1332): Though more closely associated with Zaytuna, Ibn Khaldun studied and taught at various madrasas, including in Fez. He is celebrated as one of the most influential historians and sociologists in the Islamic world, best known for his work "Muqaddimah."</li>
         </ul>
     `,
+    image: "https://www.barcelo.com/guia-turismo/wp-content/uploads/2023/09/al-attarine-madrasa-1.jpg"
         },
         {
           name: "Madrasa Bou Inania",
@@ -369,6 +378,7 @@
             <li><strong>Ibn Khaldun</strong> (born 1332): Ibn Khaldun, the renowned historian and sociologist, is believed to have taught at Bou Inania during his time in Fez. His contributions to historiography, particularly his seminal work "Muqaddimah," continue to influence modern social sciences.</li>
         </ul>
     `,
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/a1/Bou_Inania_Madrasa_2011.jpg"
         },
         {
           name: "Madrasa Slimaniya",
@@ -384,6 +394,7 @@
             <li><strong>Al-Fasi Family Scholars</strong>: Many scholars from the Al-Fasi family, a prominent family of religious scholars in Fez, were connected to institutions like Madrasa Slimaniya. They contributed to Islamic jurisprudence, theology, and mysticism.</li>
         </ul>
     `,
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Madrasa_Slimania_-_%D8%A7%D9%84%D9%85%D8%AF%D8%B1%D8%B3%D8%A9_%D8%A7%D9%84%D8%B3%D9%84%D9%8A%D9%85%D8%A7%D9%86%D9%8A%D8%A9_-_M%C3%A9dersa_Slimania_photo2.jpg/1200px-Madrasa_Slimania_-_%D8%A7%D9%84%D9%85%D8%AF%D8%B1%D8%B3%D8%A9_%D8%A7%D9%84%D8%B3%D9%84%D9%8A%D9%85%D8%A7%D9%86%D9%8A%D8%A9_-_M%C3%A9dersa_Slimania_photo2.jpg"
         },
         {
           name: "Madrasat Ibn Yusuf",
@@ -399,6 +410,7 @@
             <li><strong>Al-Mawardi</strong> (born 972): An influential scholar of Islamic law and governance, his works on statecraft and jurisprudence were studied in many institutions, including Madrasat Ibn Yusuf.</li>
         </ul>
     `,
+    image: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Coranic_School_%28106589859%29.jpeg"
         },
 
         {
@@ -547,6 +559,7 @@
         },
       ];
 
+
       // Iterate through universities and add markers
       universities.forEach(function (university) {
         var marker = L.marker(university.coords);
@@ -560,7 +573,12 @@
         );
 
         marker.on("click", function () {
-          document.getElementById("lightboxInfo").innerHTML = university.info;
+          document.getElementById("lightboxInfo").innerHTML = `
+    <img src="${university.image}" alt="${university.name}" style="width: 100%; height: auto; max-height: 200px; object-fit: cover;" />
+    <h3>${university.name}</h3>
+    <p>Founded: ${university.founded}</p>
+    <p>${university.info}</p>
+  `;
           document.getElementById("lightbox").classList.add("show");
         });
 
