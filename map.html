@@ -84,8 +84,16 @@
     <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
     <script>
       // Initialize the map
-      var map = L.map("map").setView([20, 0], 2); // Change initial coordinates and zoom level to fit all universities
+      var map = L.map("map", {}).setView([20, 0], 2); // Change initial coordinates and zoom level to fit all universities
 
+      // Set max bounds to restrict horizontal scrolling
+      map.setMaxBounds([
+        [90, -180], // Northeast corner (Latitude, Longitude)
+        [-90, 180], // Southwest corner (Latitude, Longitude)
+      ]);
+      map.on("drag", function () {
+        map.panInsideBounds(map.getMaxBounds(), { animate: false });
+      });
       L.tileLayer(
         "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
         {
@@ -100,14 +108,443 @@
       var markers = L.markerClusterGroup();
 
       // Define your universities array
-      var universities = [
+            var universities = [
         {
           name: "University of Bologna",
           coords: [44.4949, 11.3426],
           founded: "1088",
           info: "Oldest university in the world.",
-        }
+        },
+        {
+          name: "University of Paris",
+          coords: [48.8566, 2.3522],
+          founded: "1150",
+          info: "Founded in 1150 in Paris.",
+        },
+        {
+          name: "University of Oxford",
+          coords: [51.7548, -1.2544],
+          founded: "1167",
+          info: "One of the oldest universities.",
+        },
+        {
+          name: "University of Cambridge",
+          coords: [52.2043, 0.1218],
+          founded: "1209",
+          info: "Founded in Cambridge, UK.",
+        },
+        {
+          name: "Al Qarawiyyin",
+          coords: [34.0658, -4.9785], // Coordinates for Al Qarawiyyin
+          founded: "859",
+          info: `
+        <h3>General Info</h3>
+        <p>Al Qarawiyyin University, located in Fez, Morocco, is one of the oldest universities in the world, founded in 859 AD by Fatima al-Fihri. It has served as a key center for Islamic learning in the Maghreb and continues to influence Islamic jurisprudence, theology, and intellectual thought. The university has been a place of study for many notable scholars throughout history.</p>
         
+        <h3>Notable Scholars</h3>
+        <ul>
+            <li><strong>Ibn Khaldun</strong> (born 1332): A prominent historian and philosopher from the Maghreb, Ibn Khaldun is widely regarded as the father of sociology and historiography. His work 'Muqaddimah' laid the foundations for the study of civilizations, economics, and politics.</li>
+            <li><strong>Averroes (Ibn Rushd)</strong> (born 1126): A key figure in the Islamic Golden Age, Averroes was a philosopher and physician who played a significant role in the transmission of Aristotelian thought to the West. His commentaries on Aristotle were influential in both the Islamic world and medieval Europe.</li>
+            <li><strong>Al-Idrisi</strong> (born 1100): A renowned geographer and cartographer, Al-Idrisi created one of the most detailed world maps of his time. His contributions to geography had a lasting impact on both Islamic and European mapping.</li>
+            <li><strong>Leo Africanus (al-Hasan al-Wazzan)</strong> (born 1494): A diplomat and scholar, Leo Africanus is best known for his work 'Description of Africa,' which provided a detailed account of North African geography and culture in the 16th century.</li>
+        </ul>
+    `,
+        },
+        {
+          name: "University of Salamanca",
+          coords: [40.9634, -5.6669],
+          founded: "1134",
+          info: "Located in Spain.",
+        },
+        {
+          name: "Al Azhar",
+          coords: [30.0444, 31.2357], // Coordinates for Al Azhar
+          founded: "970",
+          info: `
+        <h3>General Info</h3>
+        <p>Al Azhar University, located in Cairo, Egypt, was founded in 970 AD and is one of the most prestigious and oldest universities in the world. It has been a major center of Islamic scholarship, particularly for Sunni Islam, focusing on theology, Islamic jurisprudence, the Quran, and the Arabic language. Al Azhar has played a critical role in shaping Islamic thought and law, with its influence spreading across the Islamic world.</p>
+        
+        <h3>Notable Scholars</h3>
+        <ul>
+            <li><strong>Al-Ghazali</strong> (born 1058): A highly influential Islamic theologian, philosopher, and Sufi mystic, Al-Ghazali is best known for his works on theology, ethics, and Sufism. His book 'The Incoherence of the Philosophers' had a profound impact on Islamic thought and the relationship between philosophy and religion.</li>
+            <li><strong>Al-Suyuti</strong> (born 1445): A prolific scholar, Al-Suyuti contributed extensively to Islamic theology, law, and the study of Hadith. His works are still studied today, and he remains a respected figure in Islamic scholarship.</li>
+            <li><strong>Mohammed Abduh</strong> (born 1849): A leading Islamic modernist, Mohammed Abduh sought to reform Islamic thought by reconciling tradition with modernity. His ideas played a key role in the development of modern Islamic thought and the reform of Al Azhar University itself.</li>
+            <li><strong>Sheikh Ahmed el-Tayeb</strong> (born 1946): The current Grand Imam of Al Azhar, Sheikh Ahmed el-Tayeb is a prominent Islamic scholar and authority on Sunni Islam. He is known for his efforts in promoting interfaith dialogue and modernizing the religious curriculum at Al Azhar.</li>
+        </ul>
+    `,
+        },
+        {
+          name: "Vicenza",
+          coords: [45.5455, 11.5354],
+          founded: "1200",
+          info: "Located in Italy.",
+        },
+        {
+          name: "Padua",
+          coords: [45.4064, 11.8768],
+          founded: "1222",
+          info: "Located in Italy.",
+        },
+        {
+          name: "University of Naples",
+          coords: [40.8518, 14.2681],
+          founded: "1224",
+          info: "Located in Naples, Italy.",
+        },
+        {
+          name: "University of Heidelberg",
+          coords: [49.3988, 8.6724],
+          founded: "1386",
+          info: "Located in Heidelberg, Germany.",
+        },
+        {
+          name: "University of Vienna",
+          coords: [48.2082, 16.3738],
+          founded: "1365",
+          info: "Located in Austria.",
+        },
+        {
+          name: "Zaytuna",
+          coords: [36.8065, 10.1815], // Coordinates for Zaytuna
+          founded: "737",
+          info: `
+        <h3>General Info</h3>
+        <p>Zaytuna University, located in Tunisia, is one of the oldest universities in the world, founded in 737 AD. It has been a center of Islamic scholarship and education for centuries, contributing significantly to the intellectual and cultural life of the Islamic world. The university emphasizes traditional Islamic studies, including theology, jurisprudence, and the Arabic language.</p>
+        
+        <h3>Notable Scholars</h3>
+        <ul>
+            <li><strong>Ibn Khaldun</strong> (born 1332): Ibn Khaldun was a prominent Arab historian and philosopher, known for his work in sociology, economics, and historiography. He is best known for his book 'Muqaddimah,' which laid the foundations for several fields of social sciences.</li>
+            <li><strong>Abu Zayd al-Balkhi</strong> (born 850): Abu Zayd al-Balkhi was a Persian scholar and geographer, recognized for his contributions to geography and psychology. His works greatly influenced the fields of cartography and social sciences.</li>
+        </ul>
+    `,
+        },
+        {
+          name: "University of Sankoré",
+          coords: [16.7745, -3.0075],
+          founded: "989",
+          info: "Located in Timbuktu, Mali.",
+        },
+        {
+          name: "Nalanda University",
+          coords: [25.1358, 85.4433],
+          founded: "5th century",
+          info: "Located in India.",
+        },
+        {
+          name: "Taxila",
+          coords: [33.7458, 72.7878],
+          founded: "4th century BC",
+          info: "Ancient university in Pakistan.",
+        },
+        {
+          name: "Sungkyunkwan University",
+          coords: [37.5874, 126.9927],
+          founded: "1398",
+          info: "Located in Seoul, South Korea.",
+        },
+        {
+          name: "Nanjing University",
+          coords: [32.0603, 118.7969],
+          founded: "258",
+          info: "Located in Nanjing, China.",
+        },
+        {
+          name: "University of Toulouse",
+          coords: [43.6047, 1.4442],
+          founded: "1229",
+          info: "Located in Toulouse, France.",
+        },
+        {
+          name: "University of Erfurt",
+          coords: [50.9787, 11.0328],
+          founded: "1379",
+          info: "Located in Erfurt, Germany.",
+        },
+        {
+          name: "University of Ferrara",
+          coords: [44.8372, 11.6206],
+          founded: "1391",
+          info: "Located in Ferrara, Italy.",
+        },
+        {
+          name: "University of Würzburg",
+          coords: [49.7944, 9.9294],
+          founded: "1402",
+          info: "Located in Würzburg, Germany.",
+        },
+        {
+          name: "University of Leipzig",
+          coords: [51.3397, 12.3731],
+          founded: "1409",
+          info: "Located in Leipzig, Germany.",
+        },
+        {
+          name: "University of St. Andrews",
+          coords: [56.3404, -2.7955],
+          founded: "1413",
+          info: "Located in St. Andrews, Scotland.",
+        },
+        {
+          name: "University of Turin",
+          coords: [45.0703, 7.6869],
+          founded: "1404",
+          info: "Located in Turin, Italy.",
+        },
+        {
+          name: "University of Louvain",
+          coords: [50.8798, 4.7005],
+          founded: "1425",
+          info: "Located in Louvain, Belgium.",
+        },
+        {
+          name: "University of Poitiers",
+          coords: [46.5802, 0.3404],
+          founded: "1431",
+          info: "Located in Poitiers, France.",
+        },
+        {
+          name: "Jenne (Djenné) Madrasas",
+          coords: [13.9067, -4.554],
+          founded: "12th century",
+          info: "Located in Djenné, Mali.",
+        },
+        {
+          name: "Sidi Okba",
+          coords: [34.6345, 5.8823], // Coordinates for Sidi Okba
+          founded: "686",
+          info: `
+        <h3>General Info</h3>
+        <p>The Mosque of Sidi Okba, located in modern-day Algeria, was built in 686 AD. It is one of the oldest mosques in North Africa, named after Uqba ibn Nafi, a prominent Muslim general and conqueror. Sidi Okba has been a significant religious and historical site, serving as a center for Islamic worship and a symbol of the Islamic conquest of North Africa.</p>
+        
+        <h3>Notable Scholars</h3>
+        <ul>
+            <li><strong>Uqba ibn Nafi</strong> (died 683): Although primarily a military leader, Uqba ibn Nafi is a revered figure in the Islamic world for his role in spreading Islam across North Africa. His legacy is linked to the establishment of Islamic centers like Sidi Okba and Kairouan, fostering Islamic scholarship and culture.</li>
+            <li><strong>Al-Wansharisi</strong> (born 1430): A Maliki jurist and scholar from North Africa, Al-Wansharisi is known for his works on Islamic law and his influence on the Maliki school of thought, which is widely followed in the region. He contributed to the intellectual and religious development of North African Islamic communities.</li>
+        </ul>
+    `,
+        },
+
+        {
+          name: "Kairouan Mosque",
+          coords: [35.6781, 10.0963], // Coordinates for Kairouan Mosque
+          founded: "670",
+          info: `
+        <h3>General Info</h3>
+        <p>The Great Mosque of Kairouan, located in Kairouan, Tunisia, was founded in 670 AD by Uqba ibn Nafi. It is one of the most important and oldest mosques in the Islamic world, often regarded as the fourth holiest site in Islam. The mosque has served as a significant center of Islamic learning, particularly in the fields of theology, jurisprudence, and the Arabic language.</p>
+        
+        <h3>Notable Scholars</h3>
+        <ul>
+            <li><strong>Sahnun ibn Sa'id</strong> (born 776): A renowned Maliki jurist, Sahnun is best known for compiling the "Mudawwana," a key text in Maliki jurisprudence. His work solidified Kairouan's position as a leading center for the Maliki school of thought in North Africa.</li>
+            <li><strong>Ibn Sharaf al-Kairouani</strong> (born 1004): A famous poet and scholar from Kairouan, Ibn Sharaf was known for his literary works and his contributions to Arabic poetry and rhetoric.</li>
+            <li><strong>Ibn Abi Zayd al-Qayrawani</strong> (born 922): A leading Maliki scholar and theologian, Ibn Abi Zayd is remembered for his treatises on Islamic jurisprudence and his influence on the religious and educational life of Kairouan and the wider Islamic world.</li>
+        </ul>
+    `,
+        },
+        {
+          name: "Madrasa Al-Attarine",
+          coords: [34.0603, -4.9823], // Coordinates for Madrasa Al-Attarine, Fez, Morocco
+          founded: "1323",
+          info: `
+        <h3>General Info</h3>
+        <p>Madrasa Al-Attarine, located in Fez, Morocco, was founded in 1323 by the Marinid Sultan Abu Said Uthman II. It is renowned for its exquisite architecture, featuring intricate zellige tilework, carved stucco, and cedar wood, making it one of the most beautiful madrasas in Morocco. The madrasa served as a key institution for Quranic and Islamic studies, attracting scholars from across the region.</p>
+        
+        <h3>Notable Scholars</h3>
+        <ul>
+            <li><strong>Ibn al-Khatib</strong> (born 1313): A prominent Andalusian historian, philosopher, and poet, Ibn al-Khatib is known for his historical works on the Marinid dynasty and his contributions to philosophy and medicine.</li>
+            <li><strong>Ibn Khaldun</strong> (born 1332): Though more closely associated with Zaytuna, Ibn Khaldun studied and taught at various madrasas, including in Fez. He is celebrated as one of the most influential historians and sociologists in the Islamic world, best known for his work "Muqaddimah."</li>
+        </ul>
+    `,
+        },
+        {
+          name: "Madrasa Bou Inania",
+          coords: [34.0618, -4.9822], // Coordinates for Madrasa Bou Inania, Fez, Morocco
+          founded: "1351",
+          info: `
+        <h3>General Info</h3>
+        <p>Madrasa Bou Inania, located in Fez, Morocco, was founded in 1351 by the Marinid Sultan Abu Inan Faris. It is one of the few madrasas in Morocco that also functioned as a mosque. The madrasa is famous for its beautiful and richly detailed decoration, including carved plaster, cedar wood, and zellige tilework. The Bou Inania complex played a central role in religious and academic life in Fez, serving as a center of Islamic education.</p>
+        
+        <h3>Notable Scholars</h3>
+        <ul>
+            <li><strong>Al-Maqrizi</strong> (born 1364): Al-Maqrizi was an Egyptian historian who spent time in Fez and benefited from the scholarly environment of institutions like Bou Inania. He is best known for his detailed historical and topographical writings, particularly on Egypt.</li>
+            <li><strong>Ibn Khaldun</strong> (born 1332): Ibn Khaldun, the renowned historian and sociologist, is believed to have taught at Bou Inania during his time in Fez. His contributions to historiography, particularly his seminal work "Muqaddimah," continue to influence modern social sciences.</li>
+        </ul>
+    `,
+        },
+        {
+          name: "Madrasa Slimaniya",
+          coords: [34.0622, -4.9777], // Coordinates for Madrasa Slimaniya, Fez, Morocco
+          founded: "1750",
+          info: `
+        <h3>General Info</h3>
+        <p>Madrasa Slimaniya, located in Fez, Morocco, was founded in 1750 by Sultan Moulay Slimane during the Alaouite dynasty. The madrasa served as a center for higher Islamic education, particularly focusing on theology, law, and Arabic language studies. Its architecture reflects a blend of traditional Moroccan design, featuring intricate wood carvings, stucco work, and beautiful tile decorations. It remains a notable example of Fez's rich educational and cultural history.</p>
+        
+        <h3>Notable Scholars</h3>
+        <ul>
+            <li><strong>Al-Taher Ben Achour</strong> (born 1879): Although Ben Achour did not specifically study at Slimaniya, he was part of the larger tradition of scholars associated with Moroccan and North African madrasas. He was a reformist Islamic scholar known for his work in Quranic exegesis and jurisprudence.</li>
+            <li><strong>Al-Fasi Family Scholars</strong>: Many scholars from the Al-Fasi family, a prominent family of religious scholars in Fez, were connected to institutions like Madrasa Slimaniya. They contributed to Islamic jurisprudence, theology, and mysticism.</li>
+        </ul>
+    `,
+        },
+        {
+          name: "Madrasat Ibn Yusuf",
+          coords: [31.6359, -8.0128], // Coordinates for Madrasat Ibn Yusuf, Marrakech, Morocco
+          founded: "1341",
+          info: `
+        <h3>General Info</h3>
+        <p>Madrasat Ibn Yusuf, located in Marrakech, Morocco, was founded in 1341 by the Marinid Sultan Abu al-Hassan Ali. This madrasa is one of the most important historical Islamic educational institutions in Morocco. It is renowned for its beautiful architecture, featuring intricate tile work, carved wood, and stucco decorations. The madrasa has served as a center for religious and legal studies, providing a scholarly environment for many students throughout its history.</p>
+        
+        <h3>Notable Scholars</h3>
+        <ul>
+            <li><strong>Abu Zayd al-Sarakhsī</strong> (born 1000): Although he is primarily associated with the Hanafi school of thought and not specifically with Madrasat Ibn Yusuf, his works influenced the curriculum and scholars in various madrasas throughout Morocco.</li>
+            <li><strong>Al-Mawardi</strong> (born 972): An influential scholar of Islamic law and governance, his works on statecraft and jurisprudence were studied in many institutions, including Madrasat Ibn Yusuf.</li>
+        </ul>
+    `,
+        },
+
+        {
+          name: "Nusaybin",
+          coords: [37.0756, 41.2168],
+          founded: "4th century",
+          info: "Located in Nusaybin, Turkey.",
+        },
+        {
+          name: "Gundeshapur",
+          coords: [31.8316, 49.8773],
+          founded: "271 AD",
+          info: "Located in modern-day Iran.",
+        },
+        {
+          name: "University of Hillsborough",
+          coords: [28.065, -82.5212],
+          founded: "19th century",
+          info: "Located in Florida, USA.",
+        },
+        {
+          name: "Calcutta Madrasah College",
+          coords: [22.5726, 88.3639],
+          founded: "1780",
+          info: "Located in Kolkata, India.",
+        },
+        {
+          name: "Serampore College",
+          coords: [22.7526, 88.3401],
+          founded: "1818",
+          info: "Located in Serampore, India.",
+        },
+        {
+          name: "University of Bombay (now Mumbai)",
+          coords: [19.076, 72.8777],
+          founded: "1857",
+          info: "Located in Mumbai, India.",
+        },
+        {
+          name: "University of Madras",
+          coords: [13.0827, 80.2707],
+          founded: "1857",
+          info: "Located in Chennai, India.",
+        },
+        {
+          name: "University of Calcutta",
+          coords: [22.5726, 88.3639],
+          founded: "1857",
+          info: "Located in Kolkata, India.",
+        },
+        {
+          name: "Panjab University",
+          coords: [30.7333, 76.7794],
+          founded: "1882",
+          info: "Located in Chandigarh, India.",
+        },
+        {
+          name: "Kaisei Gakko",
+          coords: [35.6895, 139.6917],
+          founded: "1868",
+          info: "Located in Tokyo, Japan.",
+        },
+        {
+          name: "University of Hilandar",
+          coords: [40.1373, 24.319],
+          founded: "12th century",
+          info: "Located in Mount Athos, Greece.",
+        },
+        {
+          name: "Charles University",
+          coords: [50.0755, 14.4378],
+          founded: "1348",
+          info: "Located in Prague, Czech Republic.",
+        },
+        {
+          name: "Jagiellonian University",
+          coords: [50.0647, 19.945],
+          founded: "1364",
+          info: "Located in Krakow, Poland.",
+        },
+        {
+          name: "University of Pécs",
+          coords: [46.0727, 18.233],
+          founded: "1367",
+          info: "Located in Pécs, Hungary.",
+        },
+        {
+          name: "University of Dyrrachium",
+          coords: [41.3275, 19.8189],
+          founded: "1380",
+          info: "Located in Durres, Albania.",
+        },
+        {
+          name: "University of Obuda",
+          coords: [47.4817, 19.0455],
+          founded: "19th century",
+          info: "Located in Budapest, Hungary.",
+        },
+        {
+          name: "University of Zadar",
+          coords: [44.1194, 15.2314],
+          founded: "1396",
+          info: "Located in Zadar, Croatia.",
+        },
+        {
+          name: "Universitas Istropolitana",
+          coords: [48.1486, 17.1077],
+          founded: "1465",
+          info: "Located in Bratislava, Slovakia.",
+        },
+        {
+          name: "University of Vilnius",
+          coords: [54.6872, 25.2797],
+          founded: "1579",
+          info: "Located in Vilnius, Lithuania.",
+        },
+        {
+          name: "Fu Jen Catholic University",
+          coords: [25.034, 121.4352],
+          founded: "1925",
+          info: "Located in Taipei, Taiwan.",
+        },
+        {
+          name: "Chulalongkorn University",
+          coords: [13.7367, 100.5333],
+          founded: "1917",
+          info: "Located in Bangkok, Thailand.",
+        },
+        {
+          name: "University of Timbuktu",
+          coords: [16.7745, -3.0075],
+          founded: "989",
+          info: "Located in Timbuktu, Mali.",
+        },
+        {
+          name: "Takshashila",
+          coords: [33.7458, 72.7878],
+          founded: "4th century BC",
+          info: "Ancient university in Pakistan.",
+        },
+        {
+          name: "Beijing Guozijian",
+          coords: [39.9042, 116.4074],
+          founded: "1306",
+          info: "Located in Beijing, China.",
+        },
       ];
 
       // Iterate through universities and add markers
@@ -137,12 +574,11 @@
         document.getElementById("lightbox").classList.remove("show");
       };
       // Close lightbox when clicking outside of the content
-document.getElementById("lightbox").onclick = function (event) {
-    if (event.target === this) {
-        this.classList.remove("show");
-    }
-};
-
+      document.getElementById("lightbox").onclick = function (event) {
+        if (event.target === this) {
+          this.classList.remove("show");
+        }
+      };
     </script>
   </body>
 </html>
