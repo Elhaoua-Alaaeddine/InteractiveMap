@@ -24,47 +24,40 @@
       }
 
       #map {
-        height: 100vh; /* Full height map */
-        width: 100%; /* Full width map */
+        height: 100vh;
+        width: 100%;
       }
 
-      /* Lightbox styles */
       .lightbox {
-        display: none; /* Hidden by default */
+        display: none;
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(
-          0,
-          0,
-          0,
-          0.8
-        ); /* Black background with transparency */
+        background-color: rgba(0, 0, 0, 0.8);
         justify-content: center;
         align-items: center;
-        opacity: 0; /* Fully transparent */
-        transition: opacity 0.3s ease; /* Smooth transition for opacity */
-        z-index: 1000; /* Above other elements */
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 1000;
       }
 
       .lightbox.show {
-        display: flex; /* Show the lightbox */
-        opacity: 1; /* Fully opaque */
+        display: flex;
+        opacity: 1;
       }
 
-.lightbox-content {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 400px;
-  width: 80%;
-  max-height: 80vh; /* Maximum height of lightbox */
-  overflow-y: auto; /* Enables vertical scroll if content exceeds max-height */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
+      .lightbox-content {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 400px;
+        width: 80%;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
 
       .close {
         cursor: pointer;
@@ -86,13 +79,12 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
     <script>
-      // Initialize the map
-      var map = L.map("map", {}).setView([20, 0], 2); // Change initial coordinates and zoom level to fit all universities
 
-      // Set max bounds to restrict horizontal scrolling
+      var map = L.map("map", {}).setView([20, 0], 2);
+
       map.setMaxBounds([
-        [90, -180], // Northeast corner (Latitude, Longitude)
-        [-90, 180], // Southwest corner (Latitude, Longitude)
+        [90, -180],
+        [-90, 180],
       ]);
       map.on("drag", function () {
         map.panInsideBounds(map.getMaxBounds(), { animate: false });
@@ -107,11 +99,9 @@
         }
       ).addTo(map);
 
-      // Create a marker cluster group
       var markers = L.markerClusterGroup();
 
-      // Define your universities array
-            var universities = [
+      var universities = [
         {
           name: "University of Bologna",
           coords: [44.4949, 11.3426],
@@ -138,7 +128,7 @@
         },
         {
           name: "Al Qarawiyyin",
-          coords: [34.0658, -4.9785], // Coordinates for Al Qarawiyyin
+          coords: [34.0658, -4.9785], 
           founded: "859",
           info: `
         <h3>General Info</h3>
@@ -152,7 +142,8 @@
             <li><strong>Leo Africanus (al-Hasan al-Wazzan)</strong> (born 1494): A diplomat and scholar, Leo Africanus is best known for his work 'Description of Africa,' which provided a detailed account of North African geography and culture in the 16th century.</li>
         </ul>
     `,
-    image: "https://idsb.tmgrup.com.tr/ly/uploads/images/2020/06/07/39198.jpg"
+          image:
+            "https://idsb.tmgrup.com.tr/ly/uploads/images/2020/06/07/39198.jpg",
         },
         {
           name: "University of Salamanca",
@@ -162,7 +153,7 @@
         },
         {
           name: "Al Azhar",
-          coords: [30.0444, 31.2357], // Coordinates for Al Azhar
+          coords: [30.0444, 31.2357],
           founded: "970",
           info: `
         <h3>General Info</h3>
@@ -176,7 +167,8 @@
             <li><strong>Sheikh Ahmed el-Tayeb</strong> (born 1946): The current Grand Imam of Al Azhar, Sheikh Ahmed el-Tayeb is a prominent Islamic scholar and authority on Sunni Islam. He is known for his efforts in promoting interfaith dialogue and modernizing the religious curriculum at Al Azhar.</li>
         </ul>
     `,
-    image: "https://www.inss.org.il/wp-content/uploads/2023/11/shutterstock_2269866857.jpg"
+          image:
+            "https://www.inss.org.il/wp-content/uploads/2023/11/shutterstock_2269866857.jpg",
         },
         {
           name: "Vicenza",
@@ -210,7 +202,7 @@
         },
         {
           name: "Zaytuna",
-          coords: [36.8065, 10.1815], // Coordinates for Zaytuna
+          coords: [36.8065, 10.1815],
           founded: "737",
           info: `
         <h3>General Info</h3>
@@ -222,7 +214,8 @@
             <li><strong>Abu Zayd al-Balkhi</strong> (born 850): Abu Zayd al-Balkhi was a Persian scholar and geographer, recognized for his contributions to geography and psychology. His works greatly influenced the fields of cartography and social sciences.</li>
         </ul>
     `,
-    image: "https://upload.wikimedia.org/wikipedia/commons/d/d7/Tunis_Facult%C3%A9_Zaitouna.JPG"
+          image:
+            "https://upload.wikimedia.org/wikipedia/commons/d/d7/Tunis_Facult%C3%A9_Zaitouna.JPG",
         },
         {
           name: "University of Sankoré",
@@ -316,7 +309,7 @@
         },
         {
           name: "Sidi Okba",
-          coords: [34.6345, 5.8823], // Coordinates for Sidi Okba
+          coords: [34.6345, 5.8823],
           founded: "686",
           info: `
         <h3>General Info</h3>
@@ -328,12 +321,13 @@
             <li><strong>Al-Wansharisi</strong> (born 1430): A Maliki jurist and scholar from North Africa, Al-Wansharisi is known for his works on Islamic law and his influence on the Maliki school of thought, which is widely followed in the region. He contributed to the intellectual and religious development of North African Islamic communities.</li>
         </ul>
     `,
-    image: "https://mosqpedia.org/img/cache/largeimage/xBlfMuP3hpMNXcKoRXlAgZmpNpxh9ql96hTv4HUf"
+          image:
+            "https://mosqpedia.org/img/cache/largeimage/xBlfMuP3hpMNXcKoRXlAgZmpNpxh9ql96hTv4HUf",
         },
 
         {
           name: "Kairouan Mosque",
-          coords: [35.6781, 10.0963], // Coordinates for Kairouan Mosque
+          coords: [35.6781, 10.0963],
           founded: "670",
           info: `
         <h3>General Info</h3>
@@ -346,11 +340,12 @@
             <li><strong>Ibn Abi Zayd al-Qayrawani</strong> (born 922): A leading Maliki scholar and theologian, Ibn Abi Zayd is remembered for his treatises on Islamic jurisprudence and his influence on the religious and educational life of Kairouan and the wider Islamic world.</li>
         </ul>
     `,
-    image: "https://sacredsites.com/images/africa/tunisia/great-mosque-kairouan-1200.jpg"
+          image:
+            "https://sacredsites.com/images/africa/tunisia/great-mosque-kairouan-1200.jpg",
         },
         {
           name: "Madrasa Al-Attarine",
-          coords: [34.0603, -4.9823], // Coordinates for Madrasa Al-Attarine, Fez, Morocco
+          coords: [34.0603, -4.9823],
           founded: "1323",
           info: `
         <h3>General Info</h3>
@@ -362,11 +357,12 @@
             <li><strong>Ibn Khaldun</strong> (born 1332): Though more closely associated with Zaytuna, Ibn Khaldun studied and taught at various madrasas, including in Fez. He is celebrated as one of the most influential historians and sociologists in the Islamic world, best known for his work "Muqaddimah."</li>
         </ul>
     `,
-    image: "https://www.barcelo.com/guia-turismo/wp-content/uploads/2023/09/al-attarine-madrasa-1.jpg"
+          image:
+            "https://www.barcelo.com/guia-turismo/wp-content/uploads/2023/09/al-attarine-madrasa-1.jpg",
         },
         {
           name: "Madrasa Bou Inania",
-          coords: [34.0618, -4.9822], // Coordinates for Madrasa Bou Inania, Fez, Morocco
+          coords: [34.0618, -4.9822],
           founded: "1351",
           info: `
         <h3>General Info</h3>
@@ -378,11 +374,12 @@
             <li><strong>Ibn Khaldun</strong> (born 1332): Ibn Khaldun, the renowned historian and sociologist, is believed to have taught at Bou Inania during his time in Fez. His contributions to historiography, particularly his seminal work "Muqaddimah," continue to influence modern social sciences.</li>
         </ul>
     `,
-    image: "https://upload.wikimedia.org/wikipedia/commons/a/a1/Bou_Inania_Madrasa_2011.jpg"
+          image:
+            "https://upload.wikimedia.org/wikipedia/commons/a/a1/Bou_Inania_Madrasa_2011.jpg",
         },
         {
           name: "Madrasa Slimaniya",
-          coords: [34.0622, -4.9777], // Coordinates for Madrasa Slimaniya, Fez, Morocco
+          coords: [34.0622, -4.9777],
           founded: "1750",
           info: `
         <h3>General Info</h3>
@@ -394,11 +391,12 @@
             <li><strong>Al-Fasi Family Scholars</strong>: Many scholars from the Al-Fasi family, a prominent family of religious scholars in Fez, were connected to institutions like Madrasa Slimaniya. They contributed to Islamic jurisprudence, theology, and mysticism.</li>
         </ul>
     `,
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Madrasa_Slimania_-_%D8%A7%D9%84%D9%85%D8%AF%D8%B1%D8%B3%D8%A9_%D8%A7%D9%84%D8%B3%D9%84%D9%8A%D9%85%D8%A7%D9%86%D9%8A%D8%A9_-_M%C3%A9dersa_Slimania_photo2.jpg/1200px-Madrasa_Slimania_-_%D8%A7%D9%84%D9%85%D8%AF%D8%B1%D8%B3%D8%A9_%D8%A7%D9%84%D8%B3%D9%84%D9%8A%D9%85%D8%A7%D9%86%D9%8A%D8%A9_-_M%C3%A9dersa_Slimania_photo2.jpg"
+          image:
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Madrasa_Slimania_-_%D8%A7%D9%84%D9%85%D8%AF%D8%B1%D8%B3%D8%A9_%D8%A7%D9%84%D8%B3%D9%84%D9%8A%D9%85%D8%A7%D9%86%D9%8A%D8%A9_-_M%C3%A9dersa_Slimania_photo2.jpg/1200px-Madrasa_Slimania_-_%D8%A7%D9%84%D9%85%D8%AF%D8%B1%D8%B3%D8%A9_%D8%A7%D9%84%D8%B3%D9%84%D9%8A%D9%85%D8%A7%D9%86%D9%8A%D8%A9_-_M%C3%A9dersa_Slimania_photo2.jpg",
         },
         {
           name: "Madrasat Ibn Yusuf",
-          coords: [31.6359, -8.0128], // Coordinates for Madrasat Ibn Yusuf, Marrakech, Morocco
+          coords: [31.6359, -8.0128],
           founded: "1341",
           info: `
         <h3>General Info</h3>
@@ -410,7 +408,8 @@
             <li><strong>Al-Mawardi</strong> (born 972): An influential scholar of Islamic law and governance, his works on statecraft and jurisprudence were studied in many institutions, including Madrasat Ibn Yusuf.</li>
         </ul>
     `,
-    image: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Coranic_School_%28106589859%29.jpeg"
+          image:
+            "https://upload.wikimedia.org/wikipedia/commons/3/3a/Coranic_School_%28106589859%29.jpeg",
         },
 
         {
@@ -559,8 +558,6 @@
         },
       ];
 
-
-      // Iterate through universities and add markers
       universities.forEach(function (university) {
         var marker = L.marker(university.coords);
         marker.bindTooltip(
@@ -587,11 +584,9 @@
 
       map.addLayer(markers);
 
-      // Close lightbox functionality
       document.getElementById("closeLightbox").onclick = function () {
         document.getElementById("lightbox").classList.remove("show");
       };
-      // Close lightbox when clicking outside of the content
       document.getElementById("lightbox").onclick = function (event) {
         if (event.target === this) {
           this.classList.remove("show");
