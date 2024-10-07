@@ -83,19 +83,79 @@
 
         // Define your universities array
         var universities = [
-            {name: 'University of Bologna', coords: [44.4949, 11.3426], founded: '1088', info: 'Oldest university in the world.'},
-            {name: 'University of Paris', coords: [48.8566, 2.3522], founded: '1150', info: 'Founded in 1150 in Paris.'},
-            {name: 'University of Oxford', coords: [51.7548, -1.2544], founded: '1167', info: 'One of the oldest universities.'},
-            {name: 'Al-Qarawiyyin', coords: [34.0605, -4.9784], founded: '859', info: 'Located in Fez, Morocco.'},
-            {name: 'Zaytuna', coords: [36.8065, 10.1815], founded: '737', info: `
-                <h3>General Info</h3>
-                <p>Zaytuna University, located in Tunisia, is one of the oldest universities in the world, founded in 737 AD. It has been a center of Islamic scholarship for centuries.</p>
-                <h3>Notable Scholars</h3>
-                <ul>
-                    <li><strong>Ibn Khaldun</strong> (born 1332): Historian and philosopher, known for his work in sociology.</li>
-                    <li><strong>Abu Zayd al-Balkhi</strong> (born 850): Scholar and geographer.</li>
-                </ul>
-            `}
+    {name: 'University of Bologna', coords: [44.4949, 11.3426], founded: '1088', info: 'Oldest university in the world.'},
+    {name: 'University of Paris', coords: [48.8566, 2.3522], founded: '1150', info: 'Founded in 1150 in Paris.'},
+    {name: 'University of Oxford', coords: [51.7548, -1.2544], founded: '1167', info: 'One of the oldest universities.'},
+    {name: 'University of Cambridge', coords: [52.2043, 0.1218], founded: '1209', info: 'Founded in Cambridge, UK.'},
+    {name: 'Al-Qarawiyyin', coords: [34.0605, -4.9784], founded: '859', info: 'Located in Fez, Morocco.'},
+    {name: 'University of Salamanca', coords: [40.9634, -5.6669], founded: '1134', info: 'Located in Spain.'},
+    {name: 'Al-Azhar', coords: [30.0444, 31.2357], founded: '970', info: 'Located in Cairo, Egypt.'},
+    {name: 'Vicenza', coords: [45.5455, 11.5354], founded: '1200', info: 'Located in Italy.'},
+    {name: 'Padua', coords: [45.4064, 11.8768], founded: '1222', info: 'Located in Italy.'},
+    {name: 'University of Naples', coords: [40.8518, 14.2681], founded: '1224', info: 'Located in Naples, Italy.'},
+    {name: 'University of Heidelberg', coords: [49.3988, 8.6724], founded: '1386', info: 'Located in Heidelberg, Germany.'},
+    {name: 'University of Vienna', coords: [48.2082, 16.3738], founded: '1365', info: 'Located in Austria.'},
+{
+    name: 'Zaytuna',
+    coords: [36.8065, 10.1815], // Coordinates for Zaytuna
+    founded: '737',
+    info: `
+        <h3>General Info</h3>
+        <p>Zaytuna University, located in Tunisia, is one of the oldest universities in the world, founded in 737 AD. It has been a center of Islamic scholarship and education for centuries, contributing significantly to the intellectual and cultural life of the Islamic world. The university emphasizes traditional Islamic studies, including theology, jurisprudence, and the Arabic language.</p>
+        
+        <h3>Notable Scholars</h3>
+        <ul>
+            <li><strong>Ibn Khaldun</strong> (born 1332): Ibn Khaldun was a prominent Arab historian and philosopher, known for his work in sociology, economics, and historiography. He is best known for his book 'Muqaddimah,' which laid the foundations for several fields of social sciences.</li>
+            <li><strong>Abu Zayd al-Balkhi</strong> (born 850): Abu Zayd al-Balkhi was a Persian scholar and geographer, recognized for his contributions to geography and psychology. His works greatly influenced the fields of cartography and social sciences.</li>
+        </ul>
+    `
+},
+    {name: 'University of Sankoré', coords: [16.7745, -3.0075], founded: '989', info: 'Located in Timbuktu, Mali.'},
+    {name: 'Nalanda University', coords: [25.1358, 85.4433], founded: '5th century', info: 'Located in India.'},
+    {name: 'Taxila', coords: [33.7458, 72.7878], founded: '4th century BC', info: 'Ancient university in Pakistan.'},
+    {name: 'Sungkyunkwan University', coords: [37.5874, 126.9927], founded: '1398', info: 'Located in Seoul, South Korea.'},
+    {name: 'Nanjing University', coords: [32.0603, 118.7969], founded: '258', info: 'Located in Nanjing, China.'},
+    {name: 'University of Toulouse', coords: [43.6047, 1.4442], founded: '1229', info: 'Located in Toulouse, France.'},
+    {name: 'University of Erfurt', coords: [50.9787, 11.0328], founded: '1379', info: 'Located in Erfurt, Germany.'},
+    {name: 'University of Ferrara', coords: [44.8372, 11.6206], founded: '1391', info: 'Located in Ferrara, Italy.'},
+    {name: 'University of Würzburg', coords: [49.7944, 9.9294], founded: '1402', info: 'Located in Würzburg, Germany.'},
+    {name: 'University of Leipzig', coords: [51.3397, 12.3731], founded: '1409', info: 'Located in Leipzig, Germany.'},
+    {name: 'University of St. Andrews', coords: [56.3404, -2.7955], founded: '1413', info: 'Located in St. Andrews, Scotland.'},
+    {name: 'University of Turin', coords: [45.0703, 7.6869], founded: '1404', info: 'Located in Turin, Italy.'},
+    {name: 'University of Louvain', coords: [50.8798, 4.7005], founded: '1425', info: 'Located in Louvain, Belgium.'},
+    {name: 'University of Poitiers', coords: [46.5802, 0.3404], founded: '1431', info: 'Located in Poitiers, France.'},
+    {name: 'Jenne (Djenné) Madrasas', coords: [13.9067, -4.5540], founded: '12th century', info: 'Located in Djenné, Mali.'},
+    {name: 'Sidi Okba', coords: [34.6790, 5.8889], founded: '686', info: 'Located in Biskra, Algeria.'},
+    {name: 'Kairouan Mosque', coords: [35.6781, 10.0963], founded: '670', info: 'Located in Kairouan, Tunisia.'},
+    {name: 'Madrasa Attarine', coords: [34.0648, -4.9784], founded: '1323', info: 'Located in Fez, Morocco.'},
+    {name: 'Madrasa Bou Inania', coords: [34.0656, -4.9789], founded: '1351', info: 'Located in Fez, Morocco.'},
+    {name: 'Madrassa Slimaniya', coords: [36.7946, 10.1836], founded: '1754', info: 'Located in Tunis, Tunisia.'},
+    {name: 'Madrasat Ibn Yusuf', coords: [31.6300, -7.9880], founded: '14th century', info: 'Located in Marrakech, Morocco.'},
+    {name: 'Nusaybin', coords: [37.0756, 41.2168], founded: '4th century', info: 'Located in Nusaybin, Turkey.'},
+    {name: 'Gundeshapur', coords: [31.8316, 49.8773], founded: '271 AD', info: 'Located in modern-day Iran.'},
+    {name: 'University of Hillsborough', coords: [28.0650, -82.5212], founded: '19th century', info: 'Located in Florida, USA.'},
+    {name: 'Calcutta Madrasah College', coords: [22.5726, 88.3639], founded: '1780', info: 'Located in Kolkata, India.'},
+    {name: 'Serampore College', coords: [22.7526, 88.3401], founded: '1818', info: 'Located in Serampore, India.'},
+    {name: 'University of Bombay (now Mumbai)', coords: [19.0760, 72.8777], founded: '1857', info: 'Located in Mumbai, India.'},
+    {name: 'University of Madras', coords: [13.0827, 80.2707], founded: '1857', info: 'Located in Chennai, India.'},
+    {name: 'University of Calcutta', coords: [22.5726, 88.3639], founded: '1857', info: 'Located in Kolkata, India.'},
+    {name: 'Panjab University', coords: [30.7333, 76.7794], founded: '1882', info: 'Located in Chandigarh, India.'},
+    {name: 'Kaisei Gakko', coords: [35.6895, 139.6917], founded: '1868', info: 'Located in Tokyo, Japan.'},
+    {name: 'University of Hilandar', coords: [40.1373, 24.3190], founded: '12th century', info: 'Located in Mount Athos, Greece.'},
+    {name: 'Charles University', coords: [50.0755, 14.4378], founded: '1348', info: 'Located in Prague, Czech Republic.'},
+    {name: 'Jagiellonian University', coords: [50.0647, 19.9450], founded: '1364', info: 'Located in Krakow, Poland.'},
+    {name: 'University of Pécs', coords: [46.0727, 18.2330], founded: '1367', info: 'Located in Pécs, Hungary.'},
+    {name: 'University of Dyrrachium', coords: [41.3275, 19.8189], founded: '1380', info: 'Located in Durres, Albania.'},
+    {name: 'University of Obuda', coords: [47.4817, 19.0455], founded: '19th century', info: 'Located in Budapest, Hungary.'},
+    {name: 'University of Zadar', coords: [44.1194, 15.2314], founded: '1396', info: 'Located in Zadar, Croatia.'},
+    {name: 'Universitas Istropolitana', coords: [48.1486, 17.1077], founded: '1465', info: 'Located in Bratislava, Slovakia.'},
+    {name: 'University of Vilnius', coords: [54.6872, 25.2797], founded: '1579', info: 'Located in Vilnius, Lithuania.'},
+    {name: 'Fu Jen Catholic University', coords: [25.0340, 121.4352], founded: '1925', info: 'Located in Taipei, Taiwan.'},
+    {name: 'Chulalongkorn University', coords: [13.7367, 100.5333], founded: '1917', info: 'Located in Bangkok, Thailand.'},
+    {name: 'University of Timbuktu', coords: [16.7745, -3.0075], founded: '989', info: 'Located in Timbuktu, Mali.'},
+    {name: 'Takshashila', coords: [33.7458, 72.7878], founded: '4th century BC', info: 'Ancient university in Pakistan.'},
+    {name: 'Beijing Guozijian', coords: [39.9042, 116.4074], founded: '1306', info: 'Located in Beijing, China.'}
+
         ];
 
         // Iterate through universities and add markers
